@@ -20,12 +20,16 @@ namespace MyJetWallet.ServiceBus.SessionAudit.Models ;
 		[DataMember(Order = 4)]
 		public DateTime Timestamp { get; set; } = DateTime.UtcNow;
 
-		public static SessionAuditEvent Create(SessionAction action, string traderId, Guid rootSessionId, string comment)
+		[DataMember(Order = 5)]
+		public UserAgentInfo UserAgentInfo { get; set; }
+
+		public static SessionAuditEvent Create(SessionAction action, string traderId, Guid rootSessionId, string comment, UserAgentInfo loginInfo = null)
 		{
 			return new SessionAuditEvent
 			{
 				Action = action,
 				Comment = comment,
+				UserAgentInfo = loginInfo,
 				Session = new SessionItem
 				{
 					RootSessionId = rootSessionId,
